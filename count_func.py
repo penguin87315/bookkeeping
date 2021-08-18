@@ -11,6 +11,7 @@ def read_file(filename):
 				products.append([name, int(price)])
 	return products
 
+
 def user_input(products):
 	while True:
 		name = input('請輸入商品名稱:')
@@ -19,6 +20,9 @@ def user_input(products):
 		price = input('請輸入商品價格:')
 		price = int(price)
 		products.append([name, price])
+		decision = input('還要輸入下一筆嗎？(y/n)：')
+		if decision == 'n':
+			break
 	print(products)
 	return products
 
@@ -36,16 +40,18 @@ def write_file(filename, products):
 
 
 def main():
-	filename = 'products.csv'
+	today = input('請輸入今天日期：')
+	filename = today + '.csv'
 	if os.path.isfile(filename):
-		print('檔案打開中...')
-		products = read_file(filename)
+		if today + '.csv' == filename:
+			print('檔案打開中...')
+			products = read_file(filename)
 	else:
-		print('檔案不在，請重新檢查！')
+		print('新的一天，重新開始建立')
 
 	products = user_input(products)
 	count_money(products)
-	write_file('products.csv', products)
+	write_file(filename, products)
 
 #程式進入點
 main()
